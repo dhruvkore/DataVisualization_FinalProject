@@ -2,12 +2,15 @@
 
 var heatMapVis = function(){
     var newHeatMap = {
-        drawMap: function(svg, bottom, top, data){
+        drawMap: function(svg, bottom, top){
             
+            
+
             d3.json("https://dhruvkore.github.io/DataVisualization_FinalProject/chicago.json", function(json) {
 
                 //Loads heat map data from csv -- will work with any CSV where zip is first column
                 d3.csv("avg-SAT-by-Zip-Chi.csv", function(data){
+
                     var SATdict = {};
                     var rentDict={};
                     
@@ -37,6 +40,7 @@ var heatMapVis = function(){
                 var width = +svg.attr("width");
                 var height = +svg.attr("height");
 
+                svg.selectAll(".path").remove();
                 // create a first guess for the projection
                 var center = d3.geoCentroid(json)
                 var scale = 150;
@@ -44,6 +48,7 @@ var heatMapVis = function(){
                 //Define path generator
                 var path = d3.geoPath()
                                 .projection(projection);
+
 
                 // using the path determine the bounds of the current map and use
                 // these to determine better values for the scale and translation
@@ -66,11 +71,14 @@ var heatMapVis = function(){
 
 
                 //Bind data and create one path per GeoJSON feature
+
+
                 svg.selectAll("path")
                 .data(json.features)
                 .enter()
                 .append("path")
                 .attr("d", path)
+                .attr("class", "path")
                 .attr("id", function(d){
                     return d.properties.ZIP
                 })
