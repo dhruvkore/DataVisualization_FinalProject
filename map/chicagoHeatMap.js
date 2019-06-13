@@ -22,11 +22,6 @@ var heatMapVis = function(){
                         SATdict[data[d].zip] = data[d].avgSAT;
                         rentDict[data[d].zip] = data[d].MedGrossRent;
                         zipcode[data[d].zip] = data[d].zip;
-                        // sats.push(data[d].avgSAT)
-                        // rents.push(data[d].MedGrossRent)
-                        // SATdict[data[d].zip] = data[d].avgSAT;
-                        // rentDict[data[d].zip] = data[d].MedGrossRent;
-                        // zipcode[data[d].zip] = data[d].zip;
 
                     }
 
