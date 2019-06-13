@@ -2,7 +2,7 @@
 
 var heatMapVis = function(){
     var newHeatMap = {
-        drawMap: function(svg, bottom, minPrice, maxPrice, parks, schools, hasTooltip){
+        drawMap: function(svg, bottom, top, minPrice, maxPrice, parks, schools, hasTooltip){
             
             d3.json("https://dhruvkore.github.io/DataVisualization_FinalProject/map/chicago.json"/*"chicago.json"*/, function(json) {
 
@@ -31,7 +31,8 @@ var heatMapVis = function(){
                         var avgSAT = SATdict[zipcodeData.properties.ZIP];
                         if(minPrice > /*zipcodeData.MedGrossRent*/ medRent || 
                             maxPrice < /*zipcodeData.MedGrossRent*/ medRent || 
-                            bottom > /*zipcodeData.avgSAT*/ avgSAT){
+                            bottom > /*zipcodeData.avgSAT*/ avgSAT || 
+                            top < avgSAT) {
                             return 0.0;
                         }
                         var value = 0.0;
@@ -124,10 +125,11 @@ var heatMapVis = function(){
                         return SATdict[d.properties.ZIP];
                     })
                     .attr("fill", function(d){
-                        var val = ratings[d.properties.ZIP]; //TODO: replace this rating function
+                        var val = ratings[d.properties.ZIP]; //Rating function stored values
                         if(rentDict[d.properties.ZIP] > maxPrice || 
                             rentDict[d.properties.ZIP] < minPrice ||
-                            SATdict[d.properties.ZIP] < bottom
+                            SATdict[d.properties.ZIP] < bottom ||
+                            SATdict[d.properties.ZIP] > top
                             ){
                             return 'rgb(150,150,150)'
                         }else{
@@ -259,7 +261,8 @@ var heatMapVis = function(){
                         var val = rating(d); //Rating function gets value
                         if(rentDict[d.properties.ZIP] > maxPrice || 
                             rentDict[d.properties.ZIP] < minPrice ||
-                            SATdict[d.properties.ZIP] < bottom
+                            SATdict[d.properties.ZIP] < bottom ||
+                            SATdict[d.properties.ZIP] > top
                             ){
                                 return 'rgb(150,150,150)'
                         }else{
