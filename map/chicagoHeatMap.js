@@ -125,7 +125,7 @@ var heatMapVis = function(){
                         return SATdict[d.properties.ZIP];
                     })
                     .attr("fill", function(d){
-                        var val = ratings[d.properties.ZIP]; //TODO: replace this rating function
+                        var val = ratings[d.properties.ZIP]; //Rating function stored values
                         if(rentDict[d.properties.ZIP] > maxPrice || 
                             rentDict[d.properties.ZIP] < minPrice ||
                             SATdict[d.properties.ZIP] < bottom ||
